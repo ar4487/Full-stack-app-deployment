@@ -1,0 +1,25 @@
+:root{
+  --bg:#f5f7fb;
+  --card:#ffffff;
+  --accent:#2563eb;
+  --muted:#6b7280;
+}
+*{box-sizing:border-box}
+body{font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;margin:0;background:var(--bg);color:#111}
+.container{max-width:720px;margin:40px auto;padding:0 16px}
+.card{background:var(--card);padding:20px;border-radius:12px;box-shadow:0 6px 18px rgba(15,23,42,0.06)}
+.hidden{display:none}
+h2{margin:0 0 12px 0}
+input,textarea,button{width:100%;padding:10px;border-radius:8px;border:1px solid #e6e9ef;margin-bottom:10px;font-size:15px}
+textarea{min-height:80px;resize:vertical}
+button{background:var(--accent);color:#fff;border:none;cursor:pointer}
+button:hover{opacity:0.95}
+.note-form{display:grid;grid-template-columns:1fr auto;gap:8px}
+.note-form input{grid-column:1}
+.note-form button{grid-column:2;width:120px}
+.notes{list-style:none;padding:0;margin-top:10px}
+.note{padding:12px;border-radius:8px;border:1px solid #eef2ff;margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start}
+.note h3{margin:0 0 6px 0}
+.note p{margin:0;color:var(--muted)}
+.app-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.muted{color:var(--muted);font-size:14px}

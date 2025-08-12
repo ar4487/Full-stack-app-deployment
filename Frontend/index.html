@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Notes App</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <div id="auth" class="card">
+      <h2 id="auth-title">Sign in</h2>
+      <form id="auth-form">
+        <input id="email" type="email" placeholder="Email" required>
+        <input id="password" type="password" placeholder="Password" required>
+        <button id="auth-btn" type="submit">Sign in</button>
+      </form>
+      <p class="muted" id="toggle-auth">No account? <a href="#" id="toggle-link">Register</a></p>
+      <div id="auth-msg" class="muted"></div>
+    </div>
+
+    <div id="app" class="card hidden">
+      <header class="app-header">
+        <h2>My Notes</h2>
+        <div>
+          <button id="logout">Log out</button>
+        </div>
+      </header>
+
+      <form id="note-form" class="note-form">
+        <input id="note-title" placeholder="Title" required/>
+        <textarea id="note-content" placeholder="Content"></textarea>
+        <button type="submit">Add note</button>
+      </form>
+
+      <ul id="notes-list" class="notes"></ul>
+    </div>
+  </main>
+  <script>
+    // backend base url: change if backend is at different host
+    window.API_BASE = "http://localhost:8000";
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>
