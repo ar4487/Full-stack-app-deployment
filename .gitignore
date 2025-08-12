@@ -1,79 +1,109 @@
-# Node.js
-node_modules/
+# ======================
+# Python (backend)
+# ======================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# Virtualenvs
+venv/
+.env/
+.venv/
+env/
+ENV/
+backend/venv/
+backend/.venv/
+
+# Python testing / coverage
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Django / Flask / local DBs / instance
+*.sqlite3
+db.sqlite3
+instance/
+local_settings.py
+
+# Secrets / env files
+*.env
+backend/app/.env
+frontend/.env
+
+# Misc
+*.log
+*.pot
+*.mo
+*.pyc
+
+# ======================
+# Node / Frontend
+# ======================
+# Node modules
+frontend/node_modules/
+
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-package-lock.json
-yarn.lock
-
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-*.pyc
-.Python
-env/
-venv/
-ENV/
-.venv/
-pip-log.txt
-pip-delete-this-directory.txt
-
-# OS generated files
-.DS_Store
-Thumbs.db
-ehthumbs.db
-Icon?
-Desktop.ini
-
-# IDEs and editors
-.vscode/
-.idea/
-*.sublime-workspace
-*.sublime-project
-
-# Logs
-logs/
-*.log
 
 # Build output
-dist/
-build/
-out/
-coverage/
-*.tgz
+frontend/build/
+frontend/dist/
+frontend/.parcel-cache/
+frontend/.next/
+frontend/.nuxt/
+frontend/.vite/
 
-# Environment files
-.env
-.env.*
-!.env.example
+# Lock files (keep if intentionally tracked)
+# package-lock.json
+# yarn.lock
 
-# Misc
-*.swp
-*.bak
-*.tmp
-*.orig
-*.rej
-
-# Test coverage
-coverage/
-.nyc_output/
-
-# TypeScript
+# TypeScript cache
 *.tsbuildinfo
 
-# Next.js
-.next/
-out/
-
-# React Native
-.expo/
-*.expo
-
-# Mac system files
-*.DS_Store
-
-# Windows system files
+# ======================
+# Dev / IDE / OS files
+# ======================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
 Thumbs.db
-ehthumbs.db
+*~
+*.swp
+
+# ======================
+# Docker / Kubernetes / Terraform / CI
+docker-compose.override.yml
+docker-compose.*.yml
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# CI / local secrets and artifacts
+.env.*.local
+*.pem
+*.key
+
+# ======================
+# Other caches & tools
+.mypy_cache/
+.pyre/
+.pytype/
+.cache/
+pip-log.txt
+celerybeat-schedule
+
