@@ -31,7 +31,7 @@ InstaNote is a simple and efficient note-taking application designed to help you
 
 3. Start the application:
    
- Python:
+    Python:
    ```bash
    uvicorn app.main:app --reload --host 0.0.0.0 --port 3000
    ```
