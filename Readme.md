@@ -8,8 +8,6 @@ InstaNote is a simple and efficient note-taking application designed to help you
 - Organize notes for easy access
 - Clean and intuitive user interface
 
-## Getting Started
-
 ### Prerequisites
 - [Python](https://python.org/)
 - Any other dependencies specific to your stack
