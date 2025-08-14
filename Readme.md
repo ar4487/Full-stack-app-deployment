@@ -11,8 +11,6 @@ InstaNote is a simple and efficient note-taking application designed to help you
 ## Getting Started
 
 ### Prerequisites
-
-- [Node.js](https://nodejs.org/) (if using a Node.js backend or frontend)
 - [Python](https://python.org/) (if using a Python backend)
 - Any other dependencies specific to your stack
 
