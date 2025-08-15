@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  backend:
+    build: 
+      context: ./Backend
+      dockerfile: Dockerfile
+    # Add explicit port mapping
+    ports:
+      - "8000:8000"
+    environment:
+      - ALLOW_ORIGINS=http://localhost,http://frontend:80  
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/debug/dbinfo"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      notes-network:
+        
+
+  frontend:
+    build: 
+      context: ./Frontend
+      dockerfile: Dockerfile
+    
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    environment:
+      - API_BASE=/api
+    networks:
+      - notes-network
+
+networks:
+  notes-network:
+    name: notes-network
+    driver: bridge
+  
