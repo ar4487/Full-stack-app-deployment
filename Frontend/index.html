@@ -8,6 +8,7 @@
 </head>
 <body>
   <main class="container">
+    <!-- Authentication Card -->
     <div id="auth" class="card">
       <h2 id="auth-title">Sign in</h2>
       <form id="auth-form">
@@ -19,6 +20,7 @@
       <div id="auth-msg" class="muted"></div>
     </div>
 
+    <!-- App Card -->
     <div id="app" class="card hidden">
       <header class="app-header">
         <h2>My Notes</h2>
@@ -27,18 +29,22 @@
         </div>
       </header>
 
+      <!-- Note Form -->
       <form id="note-form" class="note-form">
         <input id="note-title" placeholder="Title" required/>
         <textarea id="note-content" placeholder="Content"></textarea>
-        <button type="submit">Add note</button>
+        <button id="save-note-btn" type="submit">Add note</button>
+        <button id="cancel-edit-btn" type="button" class="hidden">Cancel</button>
       </form>
 
+      <!-- Notes List -->
       <ul id="notes-list" class="notes"></ul>
     </div>
   </main>
+
   <script>
     // backend base url: change if backend is at different host
-    window.API_BASE = "http://localhost:8000";
+    window.API_BASE = "/api";
   </script>
   <script src="app.js"></script>
 </body>

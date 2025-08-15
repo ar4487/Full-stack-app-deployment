@@ -4,22 +4,18 @@ from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.ext.asyncio import AsyncSession
-from app import models, schemas, crud, auth
+from . import models, schemas, crud, auth
 from .database import engine, Base, get_db
 from .deps import get_current_user
 from sqlalchemy import text
 app = FastAPI(title="Notes App API")
+import os
+# CORS configuration
+origins = os.getenv("ALLOW_ORIGINS", "http://localhost").split(",")
 
-# CORS (adjust origins in production)
-origins = [
-    "http://localhost:8001",
-    "http://127.0.0.1:8001",
-    "http://localhost",
-    "file://",
-]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=origins,  # Use the configured origins
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -56,19 +52,27 @@ async def read_me(current_user=Depends(get_current_user)):
 @app.get("/debug/dbinfo")
 async def debug_dbinfo(db: AsyncSession = Depends(get_db)):
     q = await db.execute(text("select current_database(), version();"))
-    dbname, version = q.fetchone()
+    result = q.fetchone()
+    if result is None:
+        raise HTTPException(status_code=404, detail="Database information not found")
+    dbname, version = result
     return {"database": dbname, "version": version}
 
 
 # Notes endpoints
 @app.post("/notes", response_model=schemas.NoteOut, status_code=201)
 async def create_note(note_in: schemas.NoteCreate, db: AsyncSession = Depends(get_db), current_user=Depends(get_current_user)):
-    return await crud.create_note(db, current_user, note_in)
+    note, err = await crud.create_note(db, current_user, note_in)
+    if err:
+        raise HTTPException(status_code=500, detail=err)
+    return note
 
 @app.get("/notes", response_model=list[schemas.NoteOut])
 async def list_notes(db: AsyncSession = Depends(get_db), current_user=Depends(get_current_user)):
-    return await crud.list_notes(db, current_user)
-
+    notes, err = await crud.list_notes(db, current_user)
+    if err:
+        raise HTTPException(status_code=500, detail=err)
+    return notes
 @app.get("/notes/{note_id}", response_model=schemas.NoteOut)
 async def get_note(note_id: int, db: AsyncSession = Depends(get_db), current_user=Depends(get_current_user)):
     n = await crud.get_note(db, current_user, note_id)
@@ -78,14 +82,18 @@ async def get_note(note_id: int, db: AsyncSession = Depends(get_db), current_use
 
 @app.put("/notes/{note_id}", response_model=schemas.NoteOut)
 async def update_note(note_id: int, note_in: schemas.NoteCreate, db: AsyncSession = Depends(get_db), current_user=Depends(get_current_user)):
-    n = await crud.update_note(db, current_user, note_id, note_in)
-    if not n:
-        raise HTTPException(status_code=404, detail="Note not found")
-    return n
-
+    note, err = await crud.update_note(db, current_user, note_id, note_in)
+    if err:
+        # If it's a known not-found error, return 404
+        if err == "Note not found":
+            raise HTTPException(status_code=404, detail=err)
+        raise HTTPException(status_code=500, detail=err)
+    return note
 @app.delete("/notes/{note_id}", status_code=204)
 async def delete_note(note_id: int, db: AsyncSession = Depends(get_db), current_user=Depends(get_current_user)):
-    ok = await crud.delete_note(db, current_user, note_id)
-    if not ok:
-        raise HTTPException(status_code=404, detail="Note not found")
-    return
+    ok, err = await crud.delete_note(db, current_user, note_id)
+    if err:
+        if err == "Note not found":
+            raise HTTPException(status_code=404, detail=err)
+        raise HTTPException(status_code=500, detail=err)
+    return {"detail": "Note deleted successfully"}
